@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacit
 import RoundedButton from '../../componentes/RoundedButton';
 
 
-export const RegisterScreen = () => {
+const RegisterScreen = () => {
     return (
         <View style={styles.container}>
             <Image

@@ -1,14 +1,17 @@
-import React, {useState} from 'react'
+import React, {useState, } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
 import RoundedButton from '../../../Presentacion/componentes/RoundedButton';
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../App';
-
+import useViewModel from './ViewModel';
 const HomeScreen = () => {
 
-    const [correo, setCorreo] = useState('');
-    const [clave, setClave] = useState('');
+    // const [correo, setCorreo] = useState('');
+    // const [clave, setClave] = useState('');
+
+    const {correo, clave, onChange} = useViewModel();
+
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     return (
@@ -36,7 +39,7 @@ const HomeScreen = () => {
                         placeholder='Correo Electrónico'
                         keyboardType='email-address'
                         value={ correo}
-                        onChangeText={text => setCorreo(text)}
+                        onChangeText={text => onChange('correo', text)}
                     />
                 </View>
                 <View style={styles.formInput}>
@@ -50,7 +53,7 @@ const HomeScreen = () => {
                         keyboardType='default'
                         secureTextEntry={true}
                         value={ clave }
-                        onChangeText={text => setClave(text)}
+                        onChangeText={text => onChange('clave',text)}
                     />
                 </View>
                 <View style={{ marginTop: 30 }}>
