@@ -1,219 +1,125 @@
-import React from 'react'
-import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
-import RoundedButton from '../../components/RoundedButton';
-import { useNavigation } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../../App';
-
-
+import React from "react";
+import RoundedButton from "../../components/RoundedButton";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../../../App";
+import useViewModel from "./RegisterViewModel";
+import CustomTextInput from "../../components/CustomTextInput";
+import styles from "./RegisterStyles";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TextInput,
+    ToastAndroid,
+    TouchableOpacity,
+  } from "react-native";
+  
 
 const RegisterScreen = () => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { name, lastname, phone, email, password, confirmPassword, onChange, register } =
+    useViewModel();
 
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
-    return (
-        <View style={styles.container}>
-            <Image
-                style={styles.imageBackground}
-                source={require('../../../../assets/gamer-1.jpeg')}
-            />
-            <View style={styles.logoContainer}>
-                <Image
-                    source={require('../../../../assets/user_image.png')}
-                    style={styles.logoSize}
-                />
-                <Text style={styles.logoText}>Selecciona una Imagen</Text>
-            </View>
-            {/* <View style={styles.iconMore}>
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.imageBackground}
+        source={require("../../../../assets/gamer-1.jpeg")}
+      />
+      <View style={styles.logoContainer}>
+        <Image
+          source={require("../../../../assets/user_image.png")}
+          style={styles.logoSize}
+        />
+        <Text style={styles.logoText}>Selecciona una Imagen</Text>
+      </View>
+      {/* <View style={styles.iconMore}>
                 <Image
                     source={require('../../../assets/plus.png')}
                     style={styles.iconSize}
                 />
             </View> */}
 
-            <View style={styles.form}>
-                <Text style={styles.formText}>REGISTRARSE</Text>
+      <View style={styles.form}>
+        <Text style={styles.formText}>REGISTRARSE</Text>
+        <CustomTextInput
+          placeholder="Nombres"
+          keyboardType="default"
+          image={require("../../../../assets/user.png")}
+          property="name"
+          onChangeText={onChange}
+          value={name}
+        />
+        <CustomTextInput
+          placeholder="Apellidos"
+          keyboardType="default"
+          image={require("../../../../assets/my_user.png")}
+          property="lastname"
+          onChangeText={onChange}
+          value={lastname}
+        />
 
-                <View style={styles.formInput}>
-                    <Image
-                        source={require('../../../../assets/user.png')}
-                        style={styles.formIcon}
-                    />
-                    <TextInput
-                        style={styles.formtextInput}
-                        placeholder='Nombres'
-                        keyboardType='default'
-                    />
-                </View>
-                <View style={styles.formInput}>
-                    <Image
-                        source={require('../../../../assets/my_user.png')}
-                        style={styles.formIcon}
-                    />
-                    <TextInput
-                        style={styles.formtextInput}
-                        placeholder='Apellidos'
-                        keyboardType='default'
-                    />
-                </View>
-                <View style={styles.formInput}>
-                    <Image
-                        source={require('../../../../assets/phone.png')}
-                        style={styles.formIcon}
-                    />
-                    <TextInput
-                        style={styles.formtextInput}
-                        placeholder='Celular'
-                        keyboardType='numeric'
-                    />
-                </View>
+        <CustomTextInput
+          placeholder="Celular"
+          keyboardType="numeric"
+          image={require("../../../../assets/phone.png")}
+          property="phone"
+          onChangeText={onChange}
+          value={phone}
+        />
 
-                <View style={styles.formInput}>
-                    <Image
-                        source={require('../../../../assets/email.png')}
-                        style={styles.formIcon}
-                    />
-                    <TextInput
-                        style={styles.formtextInput}
-                        placeholder='Correo Electrónico'
-                        keyboardType='email-address'
-                    />
-                </View>
+        <CustomTextInput
+          placeholder="Correo Electrónico"
+          keyboardType="email-address"
+          image={require("../../../../assets/email.png")}
+          property="email"
+          onChangeText={onChange}
+          value={email}
+        />
 
-                <View style={styles.formInput}>
-                    <Image
-                        source={require('../../../../assets/password.png')}
-                        style={styles.formIcon}
-                    />
-                    <TextInput
-                        style={styles.formtextInput}
-                        placeholder='Contraseña'
-                        keyboardType='default'
-                        secureTextEntry={true}
-                    />
-                </View> 
-
-                <View style={styles.formInput}>
-                    <Image
-                        source={require('../../../../assets/confirm_password.png')}
-                        style={styles.formIcon}
-                    />
-                    <TextInput
-                        style={styles.formtextInput}
-                        placeholder='Confirmar Contraseña'
-                        keyboardType='default'
-                        secureTextEntry={true}
-                    />
-                </View>
-
-                <View style={{ marginTop: 30 }}>
-                    <RoundedButton text='CONFIRMAR' onPress={() => ToastAndroid.show('Hola!', ToastAndroid.SHORT)} />
-                </View>
-                <View style={styles.formRegistrar}>
-                    <Text >Ya tengo una cuenta </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-                        <Text style={styles.formtextRegistrar}>Iniciar Sesión </Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-        </View>
-    );
-
-}
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'black',
-    },
     
-    imageBackground: {
-        width: '100%',
-        height: '100%',
-        opacity: 0.7,
-        bottom: '30%'
-    },
-    logoContainer: {
-        position: 'absolute',
-        alignSelf: 'center',
-        top: '10%',
-        alignItems: 'center'
-    },
-    logoSize: {
-        width: 120,
-        height: 120,
-        alignSelf: 'center',
-    },
-    logoText: {
-        color: 'white',
-        textAlign: 'center',
-        fontSize: 20,
-        marginTop: 10,
-        fontWeight: 'bold'
-    },
-    form: {
-        width: '100%',
-        height: '65%',
-        backgroundColor: 'white',
-        position: 'absolute',
-        bottom: 0,
-        borderTopLeftRadius: 35,
-        borderTopRightRadius: 35,
-        padding: 20
-    },
-    formText: {
-        fontWeight: 'bold',
-        fontSize: 20,
-        textAlign: 'center'
-    },
-    formInput: {
-        flexDirection: 'row',
-        marginTop: 30
-    },
-    formIcon: {
-        width: 25,
-        height: 25,
-        marginTop: 5
-    },
-    formtextInput: {
-        flex: 1,
-        borderBottomWidth: 1,
-        borderBottomColor: '#AAAAAA',
-        marginLeft: 15
-    },
-    formButton: {
-        backgroundColor: 'azul'
-    },
-    formRegistrar: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 25
+        <CustomTextInput
+          placeholder="Contraseña"
+          keyboardType="default"
+          image={require("../../../../assets/password.png")}
+          property="password"
+          onChangeText={onChange}
+          value={password}
+          secureTextEntry={true}
+        />
 
-    },
-    formtextRegistrar: {
-        // fontStyle: 'italic',
-        color: 'red',
-        borderBottomWidth: 1,
-        borderBottomColor: 'red',
-        fontWeight: 'bold',
-        marginLeft: 10
-    }, 
-    iconMore: {
-        position: 'absolute',
-        alignSelf: 'center',
-        top: '0%',
-        alignItems: 'center'
-    },
-    iconSize: {
-        width: 20,
-        height: 20,
-        marginTop: 190,
-        marginLeft: 75
-    },
+        <CustomTextInput
+          placeholder="Confirmar Contraseña"
+          keyboardType="default"
+          image={require("../../../../assets/confirm_password.png")}
+          property="confirmPassword"
+          onChangeText={onChange}
+          value={confirmPassword}
+          secureTextEntry={true}
+        />
+
+       
+
+        <View style={{ marginTop: 30 }}>
+          <RoundedButton
+            text="CONFIRMAR"
+            onPress={() => register()}
+            // onPress={() => ToastAndroid.show("Hola!", ToastAndroid.SHORT)}
+          />
+        </View>
+        <View style={styles.formRegistrar}>
+          <Text>Ya tengo una cuenta </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
+            <Text style={styles.formtextRegistrar}>Iniciar Sesión </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 
-});
 
 export default RegisterScreen;
