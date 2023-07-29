@@ -19,7 +19,7 @@ import {
 
 const RegisterScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const { name, lastname, phone, email, password, confirmPassword, onChange, register } =
+  const { nombre, apellido, telefono, email, clave, confirmarClave, onChange, register } =
     useViewModel();
 
   return (
@@ -48,26 +48,26 @@ const RegisterScreen = () => {
           placeholder="Nombres"
           keyboardType="default"
           image={require("../../../../assets/user.png")}
-          property="name"
+          property="nombre"
           onChangeText={onChange}
-          value={name}
+          value={nombre}
         />
         <CustomTextInput
           placeholder="Apellidos"
           keyboardType="default"
           image={require("../../../../assets/my_user.png")}
-          property="lastname"
+          property="apellido"
           onChangeText={onChange}
-          value={lastname}
+          value={apellido}
         />
 
         <CustomTextInput
           placeholder="Celular"
           keyboardType="numeric"
           image={require("../../../../assets/phone.png")}
-          property="phone"
+          property="telefono"
           onChangeText={onChange}
-          value={phone}
+          value={telefono}
         />
 
         <CustomTextInput
@@ -84,9 +84,9 @@ const RegisterScreen = () => {
           placeholder="Contraseña"
           keyboardType="default"
           image={require("../../../../assets/password.png")}
-          property="password"
+          property="clave"
           onChangeText={onChange}
-          value={password}
+          value={clave}
           secureTextEntry={true}
         />
 
@@ -94,9 +94,9 @@ const RegisterScreen = () => {
           placeholder="Confirmar Contraseña"
           keyboardType="default"
           image={require("../../../../assets/confirm_password.png")}
-          property="confirmPassword"
+          property="confirmarClave"
           onChangeText={onChange}
-          value={confirmPassword}
+          value={confirmarClave}
           secureTextEntry={true}
         />
 
