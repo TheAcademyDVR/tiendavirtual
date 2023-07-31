@@ -44,7 +44,7 @@ const CustomTextInput = ({
 const styles = StyleSheet.create({
     formInput: {
         flexDirection: 'row',
-        marginTop: 30
+        marginTop: 26
     },
     formIcon: {
         width: 25,
