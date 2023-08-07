@@ -1,22 +1,30 @@
-import React, {useState, } from 'react'
+import React, {useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
 import RoundedButton from '../../components/RoundedButton';
 import { StackNavigationProp } from '@react-navigation/stack'
-import useViewModel from './HomeViewModel';
 import { RootStackParamList } from '../../../../App';
-import CustomTextInput from '../../components/CustomTextInput';
+import useViewModel from './HomeViewModel';
 import styles from './HomeStyles';
+import CustomTextInput from '../../components/CustomTextInput';
+
 
 const HomeScreen = () => {
 
     // const [correo, setCorreo] = useState('');
     // const [clave, setClave] = useState('');
 
-    const {email, password, onChange} = useViewModel();
+    const {email, password, errorMessage, onChange, login} = useViewModel();
 
     const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
+    useEffect(() => {
+      if(errorMessage !== ''){
+        ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+      }
+    }, [errorMessage]);
+    
+    
     return (
         <View style={styles.container}>
             <Image
@@ -66,12 +74,10 @@ const HomeScreen = () => {
                 </View> */}
                 <View style={{ marginTop: 30 }}>
                     {/* <RoundedButton text='ACCEDER' onPress={() => ToastAndroid.show('Hola!', ToastAndroid.SHORT)} /> */}
-                    <RoundedButton text='ACCEDER' onPress={() => {
-                        console.log('Correo: '+email)
-                        console.log('Clave: '+password)
-                    }} />
+                    <RoundedButton text='ACCEDER' onPress={() => login()   } />
 
                 </View>
+
                 <View style={styles.formRegistrar}>
                     <Text >¿No tienes cuenta?</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>

@@ -7,12 +7,12 @@ const RegisterViewModel = () => {
     
     const [errorMesage, setErrorMesage] = useState('');
     const [values, setValues] = useState({
-        nombre: '',
-        apellido: '',
-        telefono: '',
+        name: '',
+        lastname: '',
+        phone: '',
         email: '',
-        clave: '',
-        confirmarClave: ''
+        password: '',
+        confirmPassword: ''
     });
 
     const onChange = (property: string, value: any) =>{
@@ -36,20 +36,20 @@ const RegisterViewModel = () => {
     }
 
     const isValidForm  = ():boolean =>{
-        if(values.nombre === '' && values.apellido === '' && values.email === '' && values.telefono === ''
-        && values.clave === '' && values.confirmarClave === '' ){
+        if(values.name === '' && values.lastname === '' && values.email === '' && values.phone === ''
+        && values.password === '' && values.confirmPassword === '' ){
             setErrorMesage('Llena todos los campos vacios');
             return false;
         }
-        if(values.nombre === ''){
-            setErrorMesage('Ingresa tu nombre');
+        if(values.name === ''){
+            setErrorMesage('Ingresa tu name');
             return false;
         }
-        if(values.apellido === ''){
-            setErrorMesage('Ingresa tu apellido');
+        if(values.lastname === ''){
+            setErrorMesage('Ingresa tu lastname');
             return false;
         }
-        if(values.telefono === ''){
+        if(values.phone === ''){
             setErrorMesage('Ingresa tu teléfono');
             return false;
         }
@@ -58,16 +58,16 @@ const RegisterViewModel = () => {
             return false;
         }
        
-        if(values.clave === ''){
-            setErrorMesage('Ingresa tu clave');
+        if(values.password === ''){
+            setErrorMesage('Ingresa tu password');
             return false;
         }
-        if(values.confirmarClave === ''){
-            setErrorMesage('Ingresa la confirmacion de la clave');
+        if(values.confirmPassword === ''){
+            setErrorMesage('Ingresa la confirmacion de la password');
             return false;
         }
-        if(values.clave !== values.confirmarClave){
-            setErrorMesage('Las claves no coinciden');
+        if(values.password !== values.confirmPassword){
+            setErrorMesage('Las passwords no coinciden');
             return false;
         }
       

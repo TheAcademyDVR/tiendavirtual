@@ -20,12 +20,12 @@ import {
 const RegisterScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const {
-    nombre,
-    apellido,
-    telefono,
+    name,
+    lastname,
+    phone,
     email,
-    clave,
-    confirmarClave,
+    password,
+    confirmPassword,
     errorMesage,
     onChange,
     register
@@ -69,26 +69,26 @@ const RegisterScreen = () => {
             placeholder="Nombres"
             keyboardType="default"
             image={require("../../../../assets/user.png")}
-            property="nombre"
+            property="name"
             onChangeText={onChange}
-            value={nombre}
+            value={name}
           />
           <CustomTextInput
             placeholder="Apellidos"
             keyboardType="default"
             image={require("../../../../assets/my_user.png")}
-            property="apellido"
+            property="lastname"
             onChangeText={onChange}
-            value={apellido}
+            value={lastname}
           />
 
           <CustomTextInput
             placeholder="Celular"
             keyboardType="numeric"
             image={require("../../../../assets/phone.png")}
-            property="telefono"
+            property="phone"
             onChangeText={onChange}
-            value={telefono}
+            value={phone}
           />
 
           <CustomTextInput
@@ -104,9 +104,9 @@ const RegisterScreen = () => {
             placeholder="Contraseña"
             keyboardType="default"
             image={require("../../../../assets/password.png")}
-            property="clave"
+            property="password"
             onChangeText={onChange}
-            value={clave}
+            value={password}
             secureTextEntry={true}
           />
 
@@ -114,9 +114,9 @@ const RegisterScreen = () => {
             placeholder="Confirmar Contraseña"
             keyboardType="default"
             image={require("../../../../assets/confirm_password.png")}
-            property="confirmarClave"
+            property="confirmPassword"
             onChangeText={onChange}
-            value={confirmarClave}
+            value={confirmPassword}
             secureTextEntry={true}
           />
 
