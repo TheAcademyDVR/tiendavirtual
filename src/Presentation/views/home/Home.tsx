@@ -2,29 +2,36 @@ import React, {useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
 import RoundedButton from '../../components/RoundedButton';
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../App';
 import useViewModel from './HomeViewModel';
 import styles from './HomeStyles';
 import CustomTextInput from '../../components/CustomTextInput';
 
+interface Props extends StackScreenProps<RootStackParamList, 'HomeScreen'>{};
 
-const HomeScreen = () => {
+export const HomeScreen = ({navigation, route}: Props) => {
 
     // const [correo, setCorreo] = useState('');
     // const [clave, setClave] = useState('');
 
-    const {email, password, errorMessage, onChange, login} = useViewModel();
+    const {email, password, errorMessage, onChange, login, user} = useViewModel();
 
-    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+    // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
     useEffect(() => {
       if(errorMessage !== ''){
         ToastAndroid.show(errorMessage, ToastAndroid.LONG);
       }
     }, [errorMessage]);
+
+    useEffect(() => {
+     if( user?.id !== null  && user?.id !== undefined ){
+        navigation.navigate('ProfileInfoScreen');
+     }
+    }, [])
     
-    
+        
     return (
         <View style={styles.container}>
             <Image

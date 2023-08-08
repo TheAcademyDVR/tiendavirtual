@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-export const ProfileInfo = () => {
+export const ProfileInfoScreen = () => {
   return (
-    <View>
-      <Text>ProfileInfoScrenn</Text>
+    <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+      <Text>ProfileInfoScreen</Text>
     </View>
   );
 };
