@@ -1,6 +1,6 @@
 
 import React, {useEffect, useState} from 'react'
-import { GetUserUseCase } from '../../Domain/useCases/userLocal/GetUser';
+import { GetUserUseCase } from '../../Domain/useCases/userLocal/GetUserLocal';
 import { User } from '../../Domain/entities/User';
 
 export const useUserLocal = () => {
@@ -17,7 +17,10 @@ export const useUserLocal = () => {
         // console.log('USUARIO SESION> '+JSON.stringify(user));
         
     }
-  return { user }
+  return { 
+    user,
+    getUserSession
+ }
 }
 
 

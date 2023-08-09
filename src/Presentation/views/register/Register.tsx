@@ -1,46 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import RoundedButton from "../../components/RoundedButton";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
-import useViewModel from "./RegisterViewModel";
+import RegisterViewModel from "./RegisterViewModel";
 import CustomTextInput from "../../components/CustomTextInput";
 import styles from "./RegisterStyles";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TextInput,
-  ToastAndroid,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacity, ScrollView, } from "react-native";
+import ModalPickImage from "../../components/ModalPickImage";
 
 const RegisterScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const {
-    name,
-    lastname,
-    phone,
-    email,
-    password,
-    confirmPassword,
-    errorMesage,
-    onChange,
-    register
-    
-  } = useViewModel();
+  const { name, lastname, phone, email, image, password, confirmPassword, errorMesage, onChange, register, pickImage, takePhoto } = RegisterViewModel();
+  const [modalVisible, setModalVisible] = useState(false);
 
 
   useEffect(() => {
-    if(errorMesage != ''){
+    if (errorMesage != "") {
       ToastAndroid.show(errorMesage, ToastAndroid.LONG);
-
     }
-  }, [errorMesage])
-  
-  
+  }, [errorMesage]);
 
   return (
     <View style={styles.container}>
@@ -49,10 +28,19 @@ const RegisterScreen = () => {
         source={require("../../../../assets/gamer-1.jpeg")}
       />
       <View style={styles.logoContainer}>
-        <Image
-          source={require("../../../../assets/user_image.png")}
-          style={styles.logoSize}
-        />
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
+          {image == "" ? (
+            <Image
+              source={require("../../../../assets/user_image.png")}
+              style={styles.logoSize}
+            />
+          ) : (
+            <Image
+              source={{ uri: image }}
+              style={styles.logoSize}
+            />
+          )}
+        </TouchableOpacity>
         <Text style={styles.logoText}>Selecciona una Imagen</Text>
       </View>
       {/* <View style={styles.iconMore}>
@@ -124,13 +112,18 @@ const RegisterScreen = () => {
             <RoundedButton
               text="CONFIRMAR"
               onPress={() => {
-                
-                  register();
-            
+                register();
               }}
-              // onPress={() => ToastAndroid.show("Hola!", ToastAndroid.SHORT)}
+            // onPress={() => ToastAndroid.show("Hola!", ToastAndroid.SHORT)}
             />
           </View>
+
+          <ModalPickImage
+            openGallery={pickImage}
+            openCamera={takePhoto}
+            modelUseState={modalVisible}
+            setModalUseState={setModalVisible}
+          />
           <View style={styles.formRegistrar}>
             <Text>Ya tengo una cuenta </Text>
             <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState}from 'react';
 import { LoginAuthUseCase } from '../../../Domain/useCases/auth/LoginAuth';
-import { SaveUserUseCase } from '../../../Domain/useCases/userLocal/SaveUser';
-import { GetUserUseCase } from '../../../Domain/useCases/userLocal/GetUser';
+import { SaveUserUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
+import { GetUserUseCase } from '../../../Domain/useCases/userLocal/GetUserLocal';
 import { useUserLocal } from '../../hooks/useUserLocal';
 
 
@@ -14,21 +14,9 @@ const HomeViewModel = () => {
         
     });
 
-    const { user } = useUserLocal();
+    const { user, getUserSession} = useUserLocal();
     console.log('USUARIO DE SESION DEL HOOKS'+JSON.stringify(user));
     
-
-    useEffect(() => {
-        getUserSession();
-    }, [])
-
-    const getUserSession =  async () =>{
-        const user =  await GetUserUseCase();
-        console.log('USUARIO SESION> '+JSON.stringify(user));
-        
-    }
-    
-
     const onChange = (property: string, value: any) => {
         setValues({...values, [property]: value});
     }
@@ -42,6 +30,7 @@ const HomeViewModel = () => {
             }else{
                 // setErrorMessage(response.message);
                 await SaveUserUseCase(response.data);
+                getUserSession();
             }
         }
     }
