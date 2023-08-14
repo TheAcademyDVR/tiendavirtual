@@ -13,7 +13,9 @@ import ProfileUpdateViewModel from "./ProfileUpdateViewModel";
 interface Props extends StackScreenProps<RootStackParamList, 'ProfileUpdateScreen'> { };
 
 const ProfileUpdateScreen = ({ navigation, route }: Props) => {
-  const { name, lastname, phone, image, loading, errorMesage, user, onChange, onChangeInfoUpdate, registerWithImage, pickImage, takePhoto } = ProfileUpdateViewModel();
+
+  const { user } = route.params;
+  const { name, lastname, phone, image, loading, errorMesage,  onChange, onChangeInfoUpdate, update, pickImage, takePhoto } = ProfileUpdateViewModel(user);
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -22,10 +24,6 @@ const ProfileUpdateScreen = ({ navigation, route }: Props) => {
       ToastAndroid.show(errorMesage, ToastAndroid.LONG);
     }
   }, [errorMesage]);
-
-  useEffect(() => {
-    onChangeInfoUpdate(user?.name!, user?.lastname!, user?.phone!);
-  }, [user])
 
   return (
     <View style={styles.container}>
@@ -121,7 +119,7 @@ const ProfileUpdateScreen = ({ navigation, route }: Props) => {
             <RoundedButton
               text="CONFIRMAR"
               onPress={() => {
-                registerWithImage();
+                update();
               }}
             // onPress={() => ToastAndroid.show("Hola!", ToastAndroid.SHORT)}
             />

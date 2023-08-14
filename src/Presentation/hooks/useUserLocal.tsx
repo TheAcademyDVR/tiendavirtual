@@ -13,10 +13,8 @@ export const useUserLocal = () => {
 
     const getUserSession =  async () =>{
         const user =  await GetUserLocalUseCase();
-        setUser(user);
-        
-        // console.log('USUARIO SESION> '+JSON.stringify(user));
-        
+        setUser(user); 
+        // console.log('USUARIO SESION> '+JSON.stringify(user));  
     }
   return { 
     user,
