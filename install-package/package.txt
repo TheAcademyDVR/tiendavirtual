@@ -1,0 +1,21 @@
+
+-----------------------------------------------------------------
+react-native-reanimated-carousel
+
+Link:       https://www.npmjs.com/package/react-native-reanimated-carousel
+Comando:    npm i react-native-reanimated-carousel
+
+Package extra
+
+Managed Expo
+Link:       https://docs.swmansion.com/react-native-gesture-handler/docs/installation
+Comando:    npm i expo install react-native-gesture-handler
+
+Link:       https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/#step-1-install-the-package
+Comando:    npm i expo install react-native-reanimated
+
+
+-----------------------------------------------------------------
+
+
+

@@ -1,12 +1,11 @@
-import React, {useState, useEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacity } from 'react-native';
-import RoundedButton from '../../components/RoundedButton';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
+import React, { useEffect } from 'react'
+import { Text, View, Image, ToastAndroid, TouchableOpacity } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../App';
+import CustomTextInput from '../../components/CustomTextInput';
+import RoundedButton from '../../components/RoundedButton';
 import HomeViewModel from './HomeViewModel';
 import styles from './HomeStyles';
-import CustomTextInput from '../../components/CustomTextInput';
 
 interface Props extends StackScreenProps<RootStackParamList, 'HomeScreen'>{};
 
@@ -28,7 +27,12 @@ export const HomeScreen = ({navigation, route}: Props) => {
 
     useEffect(() => {
      if( user?.id !== null  && user?.id !== undefined ){
-        navigation.replace('ProfileInfoScreen');
+        if(user.roles?.length! > 1){
+            navigation.replace('RoleScreen');
+        }else{
+            navigation.replace('ClientTabsNavigator');
+        }
+       
      }
     }, [user])
     

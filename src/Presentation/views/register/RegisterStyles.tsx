@@ -4,6 +4,7 @@ const RegisterStyles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "black",
+      color: 'white'
     },
   
     imageBackground: {
@@ -22,6 +23,7 @@ const RegisterStyles = StyleSheet.create({
       width: 120,
       height: 120,
       alignSelf: "center",
+      borderRadius: 100
     },
     logoText: {
       color: "white",
@@ -88,6 +90,13 @@ const RegisterStyles = StyleSheet.create({
       marginTop: 190,
       marginLeft: 75,
     },
+    loading: {
+      position: 'absolute',
+      bottom: 0,
+      top: 0,
+      left: 0,
+      right: 0
+    }
   });
   
   export default RegisterStyles;

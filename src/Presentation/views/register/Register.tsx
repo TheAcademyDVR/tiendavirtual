@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import RoundedButton from "../../components/RoundedButton";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { Text, View, Image, ToastAndroid, TouchableOpacity, ScrollView, ActivityIndicator, } from "react-native";
+import { MyColors } from "../../theme/AppTheme";
+import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
+import RoundedButton from "../../components/RoundedButton";
 import RegisterViewModel from "./RegisterViewModel";
 import CustomTextInput from "../../components/CustomTextInput";
 import styles from "./RegisterStyles";
-import { StyleSheet, Text, View, Image, TextInput, ToastAndroid, TouchableOpacity, ScrollView, } from "react-native";
 import ModalPickImage from "../../components/ModalPickImage";
 
-const RegisterScreen = () => {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const { name, lastname, phone, email, image, password, confirmPassword, errorMesage, onChange, register, pickImage, takePhoto } = RegisterViewModel();
+
+interface Props extends StackScreenProps<RootStackParamList, 'RegisterScreen'> { };
+
+const RegisterScreen = ({ navigation, route }: Props) => {
+  const { name, lastname, phone, email, image, password, confirmPassword, loading, errorMesage, user, onChange, registerWithImage, pickImage, takePhoto } = RegisterViewModel();
   const [modalVisible, setModalVisible] = useState(false);
 
 
@@ -20,6 +22,12 @@ const RegisterScreen = () => {
       ToastAndroid.show(errorMesage, ToastAndroid.LONG);
     }
   }, [errorMesage]);
+
+  useEffect(() => {
+    if (user?.id !== null && user?.id !== undefined) {
+      navigation.replace('ClientTabsNavigator');
+    }
+  }, [user])
 
   return (
     <View style={styles.container}>
@@ -41,7 +49,7 @@ const RegisterScreen = () => {
             />
           )}
         </TouchableOpacity>
-        <Text style={styles.logoText}>Selecciona una Imagen</Text>
+        <Text style={styles.logoText}>Selecciona una image</Text>
       </View>
       {/* <View style={styles.iconMore}>
                 <Image
@@ -112,18 +120,13 @@ const RegisterScreen = () => {
             <RoundedButton
               text="CONFIRMAR"
               onPress={() => {
-                register();
+                registerWithImage();
               }}
             // onPress={() => ToastAndroid.show("Hola!", ToastAndroid.SHORT)}
             />
           </View>
 
-          <ModalPickImage
-            openGallery={pickImage}
-            openCamera={takePhoto}
-            modelUseState={modalVisible}
-            setModalUseState={setModalVisible}
-          />
+
           <View style={styles.formRegistrar}>
             <Text>Ya tengo una cuenta </Text>
             <TouchableOpacity onPress={() => navigation.navigate("HomeScreen")}>
@@ -132,6 +135,32 @@ const RegisterScreen = () => {
           </View>
         </ScrollView>
       </View>
+
+      <ModalPickImage
+        openGallery={pickImage}
+        openCamera={takePhoto}
+        modelUseState={modalVisible}
+        setModalUseState={setModalVisible}
+      />
+
+      {
+        loading &&
+          <ActivityIndicator
+            style={styles.loading}
+            size="large"
+            color={MyColors.primary}
+          />
+          
+        // loading ?
+        //   <ActivityIndicator
+        //     style={styles.loading}
+        //     size="large"
+        //     color={MyColors.primary}
+        //   />
+        //   :
+        //   <View></View>
+      }
+
     </View>
   );
 };

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { ApiTiendaVirtual } from '../../../Data/sources/remote/api/ApiTiendaVirtual';
 import { RegisterAuthUseCase } from '../../../Domain/useCases/auth/RegisterAuth';
+import { RegisterWithImageAuthUseCase } from '../../../Domain/useCases/auth/RegisterWithImageAuth';
+import { SaveUserLocalUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
+import { useUserLocal } from '../../hooks/useUserLocal';
 import * as ImagePicker from 'expo-image-picker';
 
 const RegisterViewModel = () => {
@@ -17,7 +20,11 @@ const RegisterViewModel = () => {
     });
     // Version 13.3.1
     // const [file, setFile] = useState<ImagePicker.ImageInfo>()
+    const [loading, setLoading] = useState(false);
     const [file, setFile] = useState<ImagePicker.ImagePickerAsset>()
+
+    const {user, getUserSession} = useUserLocal();
+
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -32,11 +39,6 @@ const RegisterViewModel = () => {
             setFile(result.assets[0]);
         }
 
-        // Version 13.3.1
-        // if(!result.cancelled){
-        //     onChange('image', result.uri);
-        //     setFile(result);
-        // }
     }
 
     const takePhoto = async () => {
@@ -59,20 +61,30 @@ const RegisterViewModel = () => {
         setValues({ ...values, [property]: value })
     }
 
-    const register = async () => {
+    //REGISTRO SIN IMAGEN
+    // const register = async () => {
+    //     if (isValidForm()) {
+    //         const response = await RegisterAuthUseCase(values as any);
+    //         console.log('Resultados: ' + JSON.stringify(response));
+    //     }
+    // }
+
+
+    //REGISTRO CON IMAGEN
+    const registerWithImage = async () => {
         if (isValidForm()) {
-            const response = await RegisterAuthUseCase(values as any);
+            setLoading(true);
+            const response = await RegisterWithImageAuthUseCase(values, file!);
             console.log('Resultados: ' + JSON.stringify(response));
+            setLoading(false);
+
+            if(response.success){
+                await SaveUserLocalUseCase(response.data);
+                getUserSession();
+            }else{
+                setErrorMesage(response.message);
+            }
         }
-        // try {
-        //     const response = await ApiTiendaVirtual.post('/users/create', values);
-        //     console.log('Respondio correctamente'+ JSON.stringify(response));
-
-        // } catch (error) {
-        //     console.log('Error '+ error);
-
-        // }
-        // console.log(JSON.stringify(values));
     }
 
     const isValidForm = (): boolean => {
@@ -110,6 +122,10 @@ const RegisterViewModel = () => {
             setErrorMesage('Las passwords no coinciden');
             return false;
         }
+        if (values.image === '') {
+            setErrorMesage('Seleccione una imagen');
+            return false;
+        }
 
 
         return true;
@@ -118,10 +134,12 @@ const RegisterViewModel = () => {
     return {
         ...values,
         onChange,
-        register,
+        registerWithImage,
         errorMesage,
         pickImage,
-        takePhoto
+        takePhoto,
+        loading,
+        user
 
     }
 }

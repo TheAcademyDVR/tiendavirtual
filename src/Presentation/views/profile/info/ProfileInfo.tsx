@@ -1,24 +1,130 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
-import ProfileInfoViewModel from "./ProfileInfoViewModel";
-import { StackScreenProps } from "@react-navigation/stack";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../../App";
+import { useNavigation } from '@react-navigation/native';
+import ProfileInfoViewModel from "./ProfileInfoViewModel";
+import RoundedButton from "../../../components/RoundedButton";
+import styles from "../info/ProfileInfoStyle";
 
-interface Props extends StackScreenProps<RootStackParamList, 'ProfileInfoScreen'>{};
+export const ProfileInfoScreen = () => {
 
-export const ProfileInfoScreen = ({navigation, route}: Props) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const { removeSession, user } = ProfileInfoViewModel();
 
-  const { removeSession } = ProfileInfoViewModel();
   return (
-    <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-      <Button
-      onPress={() => {
-        removeSession();
-        navigation.navigate('HomeScreen');
-      }}
-      title="Cerrar Session"
-      />
-      {/* <Text>ProfileInfoScreen</Text> */}
-    </View>
+      <View style={styles.container}>
+        <Image
+          style={styles.imageBackground}
+          source={require('../../../../../assets/gamer-1.jpeg')}
+        />
+
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../../../../../assets/cyber-link-white.png')}
+            style={styles.logoSize}
+          />
+          <Text style={styles.logoText}>MI PERFIL</Text>
+        </View>
+
+        {/* <Pressable
+          style={styles.cerrarSesion}
+          onPress={() => {
+            removeSession();
+            navigation.replace('HomeScreen');
+          }}>
+          <Image
+            style={styles.cerrarSesionImage}
+            source={require('../../../../../assets/cerrar-sesion-2.png')}
+          />
+        </Pressable> */}
+        <TouchableOpacity
+          style={styles.cerrarSesion}
+          onPress={() => {
+            removeSession();
+            navigation.replace('HomeScreen');
+          }}>
+          <Image
+            style={styles.cerrarSesionImage}
+            source={require('../../../../../assets/cerrar-sesion-2.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.regresar}
+          onPress={() => {
+              user && user.roles && user.roles.length > 1 
+              ? navigation.replace('RoleScreen') 
+              : navigation.replace('ClientTabsNavigator');
+          }}>
+          <Image
+            style={styles.regresarIcon}
+            source={require('../../../../../assets/regresar.png')}
+          />
+        </TouchableOpacity>
+
+
+
+
+        <View style={styles.form}>
+
+          <Text style={styles.formTitle}>{user?.name} {user?.lastname}</Text>
+          <Text style={styles.formUser}>Usuario N. {user?.id}</Text>
+
+          {/* <View style={styles.formInfo}>
+            <Image
+              source={require('../../../../../assets/user.png')}
+              style={styles.formImage}
+            />
+            <View style={styles.formSpace}>
+              <Text style={styles.formData}>{user?.name} {user?.lastname}</Text>
+              <Text style={styles.formDescription}>Usuario N. {user?.id}</Text>
+            </View>
+          </View> */}
+          <View style={styles.formInfo}>
+            <Image
+              source={require('../../../../../assets/email.png')}
+              style={styles.formImage}
+            />
+            <View style={styles.formSpace}>
+              <Text style={styles.formData}>{user?.email} </Text>
+              <Text style={styles.formDescription}>Correo electrónico</Text>
+            </View>
+          </View>
+          <View style={{ ...styles.formInfo, marginTop: 25, marginBottom: 50 }}>
+            <Image
+              source={require('../../../../../assets/phone.png')}
+              style={styles.formImage}
+            />
+            <View style={styles.formSpace}>
+              <Text style={styles.formData}>{user?.phone} </Text>
+              <Text style={styles.formDescription}>Teléfono</Text>
+            </View>
+          </View>
+
+
+          <RoundedButton
+            onPress={() => { navigation.navigate('ProfileUpdateScreen') }}
+            text='ACTUALIZAR INFORMACIÓN'
+          />
+
+
+        </View>
+
+        <View style={styles.logoContainerUser}>
+          <Image
+            source={{ uri: user?.image }}
+            style={styles.logoSizeUser}
+          />
+        </View>
+
+        {/*       
+          <Button
+            onPress={() => {
+              removeSession();
+              navigation.navigate('HomeScreen');
+            }}
+            title="Vamos a ducharnos y cojer ahi si...."
+          /> */}
+      </View>
   );
 };

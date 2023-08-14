@@ -1,7 +1,6 @@
 import React, {useEffect, useState}from 'react';
 import { LoginAuthUseCase } from '../../../Domain/useCases/auth/LoginAuth';
-import { SaveUserUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
-import { GetUserUseCase } from '../../../Domain/useCases/userLocal/GetUserLocal';
+import { SaveUserLocalUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
 import { useUserLocal } from '../../hooks/useUserLocal';
 
 
@@ -29,7 +28,7 @@ const HomeViewModel = () => {
                 setErrorMessage(response.message);
             }else{
                 // setErrorMessage(response.message);
-                await SaveUserUseCase(response.data);
+                await SaveUserLocalUseCase(response.data);
                 getUserSession();
             }
         }
@@ -50,10 +49,10 @@ const HomeViewModel = () => {
 
     return {
         ...values,
-        user,
         onChange,
         login,
-        errorMessage
+        errorMessage,
+        user
     }        
 }
 
