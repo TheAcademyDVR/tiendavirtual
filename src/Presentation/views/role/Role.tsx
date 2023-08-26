@@ -3,16 +3,15 @@ import { Dimensions, Image, Text, View } from 'react-native'
 import { RoleItem } from '../../components/ItemRole';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../../App';
 import RoleViewModel from './RoleViewModel'
 import Carousel from 'react-native-reanimated-carousel';
 import styles from './RoleStyle';
+import { RootStackParamList } from '../../navigator/MainStackNavigator';
 
 interface Props extends StackScreenProps<RootStackParamList, 'RoleScreen'> { };
 
 export const RoleScreen = ({ navigation, route }: Props) => {
   const { removeSession } = RoleViewModel();
-
   const { user } = RoleViewModel();
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;

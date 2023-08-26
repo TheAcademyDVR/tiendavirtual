@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Text, View, Image, ToastAndroid, TouchableOpacity, ScrollView, ActivityIndicator, } from "react-native";
 import { MyColors } from "../../theme/AppTheme";
 import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../App";
 import RoundedButton from "../../components/RoundedButton";
 import RegisterViewModel from "./RegisterViewModel";
 import CustomTextInput from "../../components/CustomTextInput";
 import styles from "./RegisterStyles";
 import ModalPickImage from "../../components/ModalPickImage";
+import { RootStackParamList } from "../../navigator/MainStackNavigator";
 
 
 interface Props extends StackScreenProps<RootStackParamList, 'RegisterScreen'> { };

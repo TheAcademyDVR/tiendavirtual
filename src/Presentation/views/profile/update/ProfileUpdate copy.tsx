@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Text, View, Image, ToastAndroid, TouchableOpacity, ScrollView, ActivityIndicator } from "react-native";
 import { MyColors } from "../../../theme/AppTheme";
 import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../../../../../App";
 import RoundedButton from "../../../components/RoundedButton";
 import CustomTextInput from "../../../components/CustomTextInput";
 import styles from "./ProfileUpdateStyles";
 import ModalPickImage from "../../../components/ModalPickImage";
 import ProfileUpdateViewModel from "./ProfileUpdateViewModel";
-import { RootStackParamList } from "../../../navigator/MainStackNavigator";
 
 
 interface Props extends StackScreenProps<RootStackParamList, 'ProfileUpdateScreen'> { };
@@ -33,13 +33,8 @@ const ProfileUpdateScreen = ({ navigation, route }: Props) => {
       />
       <TouchableOpacity
         style={styles.regresar}
-        // onPress={() => { navigation.replace('ClientTabsNavigator'); }}
-        onPress={() => {
-          user && user.roles && user.roles.length > 1
-            ? navigation.replace('AdminTabsNavigator')
-            : navigation.replace('ClientTabsNavigator');
-        }}>
-      
+        onPress={() => { navigation.replace('ClientTabsNavigator'); }}
+      >
         <Image
           style={styles.regresarIcon}
           source={require('../../../../../assets/regresar.png')}

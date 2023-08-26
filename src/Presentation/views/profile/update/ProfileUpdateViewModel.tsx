@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { RegisterWithImageAuthUseCase } from '../../../../Domain/useCases/auth/RegisterWithImageAuth';
 import { SaveUserLocalUseCase } from '../../../../Domain/useCases/userLocal/SaveUserLocal';
 import { useUserLocal } from '../../../hooks/useUserLocal';
 import * as ImagePicker from 'expo-image-picker';
-import { UpdateWithoutImageUseCase } from '../../../../Domain/useCases/user/updateWithoutImage';
-import { UpdateUserUserCase } from '../../../../Domain/useCases/user/update';
+import { UpdateWithoutImageUseCase } from '../../../../Domain/useCases/user/UpdateWithOutImageUser';
+import { UpdateUserUserCase } from '../../../../Domain/useCases/user/UpdateUser';
 import { User } from '../../../../Domain/entities/User';
 import { ResponseAPITiendaVirtual } from '../../../../Data/sources/remote/models/ResponseApiTiendaVirtual';
+import { UserContext } from '../../../context/UserContext';
 
 const ProfileUpdateViewModel = (user: User) => {
 
     const [errorMesage, setErrorMesage] = useState('');
+    const [successMesage, setSuccessMesage] = useState('');
     const [values, setValues] = useState(user);
     const [loading, setLoading] = useState(false);
     const [file, setFile] = useState<ImagePicker.ImagePickerAsset>()
     const { getUserSession} = useUserLocal();
+    const { saveUserSession } = useContext(UserContext);
 
 
     const pickImage = async () => {
@@ -64,8 +67,10 @@ const ProfileUpdateViewModel = (user: User) => {
             console.log('RESULTADO ACTUALIZADO ES> '+ JSON.stringify(response));
             
             if (response.success) {
-                await SaveUserLocalUseCase(response.data);
-                getUserSession();
+                saveUserSession(response.data);
+                setSuccessMesage(response.message)
+                // await SaveUserLocalUseCase(response.data);
+                // getUserSession();
             } else {
                 setErrorMesage(response.message);
             }
@@ -100,6 +105,7 @@ const ProfileUpdateViewModel = (user: User) => {
         onChangeInfoUpdate,
         takePhoto,
         errorMesage,
+        successMesage,
         loading,
         user
     }

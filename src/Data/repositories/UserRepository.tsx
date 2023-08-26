@@ -9,14 +9,12 @@ import mime from "mime";
 export class UserRepositoryImpl implements UserRepository{
     async updateWithoutImage(user: User): Promise<ResponseAPITiendaVirtual> {
         try {
-            const response = await ApiTiendaVirtual.put<ResponseAPITiendaVirtual>(
-              "/users/updateWithoutImage",
-              user
-            );
-            console.log("RESPONSE REPOSITORY AUTH" + JSON.stringify(response.data));
+            const response = await ApiTiendaVirtual.put<ResponseAPITiendaVirtual>('/users/updateWithoutImage', user);
+            // console.log("RESPONSE REPOSITORY AUTH" + JSON.stringify(response.data));
             return Promise.resolve(response.data);
           } catch (error) {
             let e = error as AxiosError;
+            console.log("ERRPR SIN IMAGEN" + JSON.stringify(e.response?.data));
             const apiError: ResponseAPITiendaVirtual = JSON.parse(JSON.stringify(e.response?.data));
             return Promise.resolve(apiError);
           }

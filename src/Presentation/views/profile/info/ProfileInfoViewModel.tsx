@@ -1,19 +1,20 @@
-import React from "react";
-import { RemoveUserLocalUseCase } from "../../../../Domain/useCases/userLocal/RemoveUserLocal";
-import { useUserLocal } from "../../../hooks/useUserLocal";
-import { Rol } from '../../../../Domain/entities/Rol';
+import React, {useContext} from "react";
+
+import { UserContext } from "../../../context/UserContext";
 
 const ProfileInfoViewModel = () => {
 
-    const { user } = useUserLocal();
+    // const { user } = useUserLocal();
+    const { user, removeUserSession } = useContext(UserContext);
 
-    const removeSession = async () => {
-        await RemoveUserLocalUseCase();
-        console.log('Se cerro la session');
+    // const removeSession = async () => {
+    //     await RemoveUserLocalUseCase();
+    //     console.log('Se cerro la session');
         
-    };
+    // };
     return {
-        removeSession,
+        // removeSession,
+        removeUserSession,
         user
     };
 };

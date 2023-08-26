@@ -5,7 +5,7 @@ import { Text, View } from 'react-native';
 export const AdminOrderListScreen = () => {
     return (
         <View>
-            <Text>AdminOrderListScreen</Text>
+            <Text style={{textAlignVertical: 'center', paddingTop:50}}>AdminOrderListScreen</Text>
         </View>
     )
 }

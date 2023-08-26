@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { Text, View, Image, ToastAndroid, TouchableOpacity } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack'
-import { RootStackParamList } from '../../../../App';
 import CustomTextInput from '../../components/CustomTextInput';
 import RoundedButton from '../../components/RoundedButton';
 import HomeViewModel from './HomeViewModel';
 import styles from './HomeStyles';
+import { RootStackParamList } from '../../navigator/MainStackNavigator';
 
 interface Props extends StackScreenProps<RootStackParamList, 'HomeScreen'>{};
 
@@ -26,7 +26,7 @@ export const HomeScreen = ({navigation, route}: Props) => {
     }, [errorMessage]);
 
     useEffect(() => {
-     if( user?.id !== null  && user?.id !== undefined ){
+     if( user?.id !== null  && user?.id !== undefined && user?.id !== '' ){
         if(user.roles?.length! > 1){
             navigation.replace('RoleScreen');
         }else{

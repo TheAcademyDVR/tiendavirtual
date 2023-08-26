@@ -1,28 +1,43 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AdminCategoryListScreen } from '../views/admin/category/list/CategoryList';
 import { AdminOrderListScreen } from '../views/admin/order/list/OrderList';
-import { Image } from 'react-native';
+import { Image, TouchableOpacity } from 'react-native';
 import { ProfileInfoScreen } from '../views/profile/info/ProfileInfo';
+import { AdminCategoryNavigator } from './AdminCategoryNavigator';
 
 const Tab = createBottomTabNavigator();
 
 export const AdminTabsNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown:false
+      }}
+    >
+
       <Tab.Screen
-        name="AdminCategoryListScreen"
-        component={AdminCategoryListScreen}
-        options={{
-          title: 'Categorias',
-          headerShown: false,
-          tabBarLabel: 'Categorias',
-          tabBarIcon: ({ color }) => (
-            <Image
-              source={require('../../../assets/list.png')}
-              style={{ width: 25, height: 25 }}
-            />
-          )
-        }}
+        name="AdminCategoryNavigator"
+        component={AdminCategoryNavigator}   
+        options={({ route, navigation }) => (
+          {
+              title: 'Categorias',
+              tabBarLabel: 'Categorias',
+              tabBarIcon: () => (
+                  <Image
+                      source={require('../../../assets/list.png')}
+                      style={{ width: 25, height: 25 }}
+                  />
+              ),
+              headerRight: () => (
+                  <TouchableOpacity onPress={() => navigation.navigate('AdminCategoryCreateScreen')}>
+                      <Image
+                          source={require('../../../assets/add.png')}
+                          style={{ width: 35, height: 35, marginRight: 15 }}
+                      />
+                  </TouchableOpacity>
+              )
+          }
+      )} 
       />
       <Tab.Screen
         name="AdminOrderListScreen"

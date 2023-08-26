@@ -1,7 +1,6 @@
-import React, {useEffect, useState}from 'react';
+import React, {useEffect, useState, useContext}from 'react';
 import { LoginAuthUseCase } from '../../../Domain/useCases/auth/LoginAuth';
-import { SaveUserLocalUseCase } from '../../../Domain/useCases/userLocal/SaveUserLocal';
-import { useUserLocal } from '../../hooks/useUserLocal';
+import { UserContext } from '../../context/UserContext';
 
 
 const HomeViewModel = () => {
@@ -13,7 +12,8 @@ const HomeViewModel = () => {
         
     });
 
-    const { user, getUserSession} = useUserLocal();
+    // const { user, getUserSession} = useUserLocal();
+    const  { user, saveUserSession } = useContext(UserContext);
     console.log('USUARIO DE SESION DEL HOOKS'+JSON.stringify(user));
     
     const onChange = (property: string, value: any) => {
@@ -27,9 +27,10 @@ const HomeViewModel = () => {
             if(!response.success){
                 setErrorMessage(response.message);
             }else{
+               saveUserSession(response.data);
                 // setErrorMessage(response.message);
-                await SaveUserLocalUseCase(response.data);
-                getUserSession();
+                // await SaveUserLocalUseCase(response.data);
+                // getUserSession();
             }
         }
     }
