@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Dimensions, Image, Text, View } from 'react-native'
-import { RoleItem } from '../../components/ItemRole';
+import { RoleItem } from './ItemRole';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
 import { StackScreenProps } from '@react-navigation/stack';
 import RoleViewModel from './RoleViewModel'
@@ -15,7 +15,7 @@ export const RoleScreen = ({ navigation, route }: Props) => {
   const { user } = RoleViewModel();
   const width = Dimensions.get('window').width;
   const height = Dimensions.get('window').height;
-  const [mode, setMode] = useState<any>('vertical-stack');
+  const [mode, setMode] = useState<any>('horizontal-stack');
   const [snapDirection, setSnapDirection] = useState<'right' | 'left'>('left');
 
   
@@ -50,7 +50,7 @@ export const RoleScreen = ({ navigation, route }: Props) => {
           mode={mode}
         />
         <View style={styles.cerrarSession}>
-          <TouchableOpacity onPress={() => { removeSession();navigation.navigate('HomeScreen');}}>
+          <TouchableOpacity onPress={() => { removeSession();navigation.replace('HomeScreen');}}>
             <Text style={styles.titleButton}>Cerrar Sesión </Text>
           </TouchableOpacity>
 

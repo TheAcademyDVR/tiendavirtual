@@ -61,7 +61,7 @@ export const ProfileInfoScreen = () => {
         style={styles.regresar}
         onPress={() => {
           user && user.roles && user.roles.length > 1
-            ? navigation.replace('AdminTabsNavigator')
+            ? navigation.replace('RoleScreen')
             : navigation.replace('ClientTabsNavigator');
         }}>
         <Image

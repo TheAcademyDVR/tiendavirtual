@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, Image, Text, ToastAndroid, TouchableOpacity, View, ScrollView } from 'react-native';
 import styles from './CategoryUpdateStyles';
 import CustomTextInput from '../../../../components/CustomTextInput';
-import AdminCategoryUpdateViewModal from './CategoryUpdateViewModel';
 import RoundedButton from '../../../../components/RoundedButton';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
 import ModalPickImage from '../../../../components/ModalPickImage';
 import { MyColors, MyStyles } from '../../../../theme/AppTheme';
 import { CategoryStackParamList } from '../../../../navigator/AdminCategoryNavigator';
+import AdminProductUpdateViewModal from './CategoryUpdateViewModel';
+import AdminCategoryUpdateViewModal from './CategoryUpdateViewModel';
 
 interface Props extends StackScreenProps<CategoryStackParamList, 'AdminCategoryUpdateScreen'>{};
 
@@ -47,6 +47,7 @@ export const AdminCategoryUpdateScreen = ({navigation, route}: Props) => {
           {image == "" ? (
             <View>
               <Image
+              
                 style={styles.image}
                 source={require('../../../../../../assets/image_add.png')}
               />

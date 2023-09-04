@@ -1,38 +1,35 @@
 import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Rol } from '../../Domain/entities/Rol'
-import { MyColors } from '../theme/AppTheme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../App';
+import { RootStackParamList } from '../../../../navigator/MainStackNavigator';
+import { MyColors } from '../../../../theme/AppTheme';
+import { Category } from '../../../../../Domain/entities/Category';
+import { ClienteStackParamList } from '../../../../navigator/ClientStackNavigator';
 
 interface Props {
-    rol: Rol,
+    category: Category,
     height: number,
     width: number,
-    navigation: StackNavigationProp<RootStackParamList, "RoleScreen", undefined>
+    navigation: StackNavigationProp<ClienteStackParamList, "ClientCategoryListScreen", undefined>
 }
 
-export const RoleItem = ({ rol, height, width, navigation }: Props) => {
+export const ClientCategoryItem = ({ category, height, width, navigation }: Props) => {
 
     return (
         <TouchableOpacity
             onPress={() => {
-                if(rol.name == 'ADMINISTRADOR'){
-                    navigation.replace('AdminTabsNavigator');
-                }else if(rol.name == 'CLIENTE'){
-                    navigation.replace('ClientTabsNavigator');
-                }
+                navigation.navigate('ClientProductListScreen', {idCategory: category.id!})
             }}
             style={{ ...styles.container, height: height, width: width }}>
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
                     //@ts-ignore
-                    source={{ uri: rol.image }}
+                    source={{ uri: category.image }}
                 />
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>
-                        {rol.name}
+                        {category.name}
                     </Text>
                 </View>
             </View>
@@ -59,15 +56,24 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     titleContainer: {
-        backgroundColor: MyColors.primary,
+        backgroundColor: 'white',
         borderBottomRightRadius: 15,
         borderBottomLeftRadius: 15,
         alignItems: 'center',
         justifyContent: 'center',
-        height: 40
+        height: 70,
+        elevation: 8,
+        shadowColor: 'white',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.5,
+        shadowRadius: 15
     },
     title: {
-        color: 'white'
+        color: 'black',
+        fontWeight: "bold",
+        fontSize: 20
+
+        
     }
 
 });

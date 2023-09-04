@@ -14,7 +14,7 @@ export const AdminCategoryListScreen = () => {
       if(responseMessage !== ''){
         ToastAndroid.show(responseMessage, ToastAndroid.LONG);
       }
-    }, [])
+    }, [responseMessage])
 
     
     return (
